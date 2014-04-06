@@ -8,7 +8,7 @@
 # CHOOSE MATLAB CONFIGURATION
 # This should be the path to your Matlab installation
 # you can find it by the commands 'locate matlab' or 'find / -name "matlab"'
-MATLAB_HOME = /usr/local/share/matlabR2008b
+MATLAB_HOME = $(MATLABHOME)
 
 # For 32-bit Linux, uncomment these 3 lines.
 # MEX        = $(MATLAB_HOME)/bin/mex
@@ -96,8 +96,7 @@ octave: $(TARGET)_octave tidy
 oct: octave
 
 $(TARGET)_mex: $(OBJS)
-	$(MEX) -cxx CXX=$(CXX) CC=$(CXX) FC=$(FCC) LD=$(CXX) 
-	-l$(FORTRAN_LIB) -lm -O -output $@ $^
+	$(MEX) -cxx CXX=$(CXX) CC=$(CXX) FC=$(FCC) LD=$(CXX) -l$(FORTRAN_LIB) -lm -O -output $@ $^
 
 $(TARGET)_nomex: $(OBJS)
 	$(CXX) $^ -shared -o $(TARGET).$(MEX_SUFFIX) $(MATLAB_LIB) \
